@@ -8,7 +8,16 @@ const theme = createTheme({
       purple: {
         main: '#1C0C3F',
       },
+      "light-purple": {
+        main: '#5000ff'
+      },
+      white: {
+        main: '#ffffff'
+      }
     },
+    searchField: {
+      color: 'white'
+    }
 });
 
 export default theme 
