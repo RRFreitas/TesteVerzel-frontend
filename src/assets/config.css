@@ -1,0 +1,20 @@
+:root {
+    --primary: #f6872e;
+    --light-gray: #545D69;
+    --purple: #5D5FEF;
+    --background: #353535;
+    --blue: #252169;
+    --bold: 500;
+    --thin: 300;
+    --font: 'Ubuntu', sans-serif;
+}
+
+html, body {
+    background-color: var(--background);
+    color: white;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+#root {
+    height: 100%;
+}
