@@ -1,6 +1,5 @@
 import React from "react"
 import ModuleCard from "../../components/ModuleCard/ModuleCard"
-import Navbar from "../../components/Navbar"
 import SearchField from "../../components/SearchField"
 
 const modules = [
@@ -46,7 +45,6 @@ const modules = [
 const Home = (props) => {
     return (
         <React.Fragment>
-            <Navbar /> 
             <div
                 style={{
                     width: '100%',

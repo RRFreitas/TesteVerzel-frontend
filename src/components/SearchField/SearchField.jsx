@@ -32,7 +32,7 @@ const SearchField = ({ }) => {
     return (
         <CssTextField
             id="input-with-icon-textfield"
-            placeholder="Search module"
+            placeholder="Filtrar módulos"
             fullWidth
             InputProps={{
                 startAdornment: (

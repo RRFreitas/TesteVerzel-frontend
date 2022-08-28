@@ -21,9 +21,11 @@ const Navbar = () => (
                 marginLeft: '5%'
             }} 
         >
-            <img
-                src={logo}
-            />
+            <Link to='/'>
+                <img
+                    src={logo}
+                />
+            </Link>
         </div>
         <div
             style={{
@@ -33,13 +35,15 @@ const Navbar = () => (
                 marginTop: 15
             }}
         >
-            <Button
-                variant="outlined"
-                startIcon={<PersonIcon />}
-                color="purple"
-            >
-                Login / Administrativo
-            </Button>
+            <Link to='/login'>
+                <Button
+                    variant="outlined"
+                    startIcon={<PersonIcon />}
+                    color="purple"
+                >
+                    Login / Admin
+                </Button>
+            </Link>
         </div>
     </div>
 )

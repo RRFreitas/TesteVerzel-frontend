@@ -1,12 +1,15 @@
 import React from "react"
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import Chip from '@mui/material/Chip';
+import Box from '@mui/material/Box'
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
+import Typography from '@mui/material/Typography'
+import Chip from '@mui/material/Chip'
+import OndemandVideoIcon from '@mui/icons-material/OndemandVideo'
 
 const ModuleCard = ({ module, style }) => {
+    
+    const numberOfClasses = module ? module.classes.length : 0
 
     return (
         <Card
@@ -37,7 +40,7 @@ const ModuleCard = ({ module, style }) => {
                 >
                     {module.name}
                     <Chip
-                        label={`${module.classes.length || 0} aulas`}
+                        label={`${numberOfClasses} aula${numberOfClasses != 1 ? 's' : ''}`}
                         variant='outlined'
                         color='secondary'
                     />

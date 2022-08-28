@@ -1,28 +1,19 @@
-import React, { useEffect, useState } from "react";
-import {Route, Redirect} from "react-router-dom";
-import { verifyLogin } from "../../services/authentication"
+import React from "react"
+import { Route, Redirect } from "react-router-dom";
+import { useContext } from "react";
+import AuthContext from "../../context/AuthContext";
 
-function PrivateRoute({component: Component, path, ...rest}) {
-    const isLoggedIn = verifyLogin()
+
+const PrivateRoute = ({ children, ...rest}) => {
+    const { user } = useContext(AuthContext);
 
     return (
-        <Route
+        <Route 
             {...rest}
-            path={path}
-            render={props => {
-                return isLoggedIn ? (
-                    <Component {...props}/>
-                ) : (
-                    <Redirect to={{
-                        pathname: '/login',
-                        state: {
-                            from: props.location
-                        }
-                    }}/>
-                )
-            }}
-        />
-    );
+        >
+            {!user ? <Redirect to="/login" /> : children}
+        </Route>
+    )
 }
 
 export default PrivateRoute;
