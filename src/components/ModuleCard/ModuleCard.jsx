@@ -1,11 +1,10 @@
 import React from "react"
-import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
-import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import Chip from '@mui/material/Chip'
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo'
+import { Button } from "@mui/material"
 
 const ModuleCard = ({ module, style }) => {
     
@@ -24,6 +23,9 @@ const ModuleCard = ({ module, style }) => {
             <CardContent
                 style={{
                     padding: 0,
+                    paddingBottom: 10,
+                    display: 'flex',
+                    flexDirection: 'column'
                 }}
             >
                 <Typography 
@@ -40,9 +42,10 @@ const ModuleCard = ({ module, style }) => {
                 >
                     {module.name}
                     <Chip
-                        label={`${numberOfClasses} aula${numberOfClasses != 1 ? 's' : ''}`}
+                        label={`${numberOfClasses} aula${numberOfClasses !== 1 ? 's' : ''}`}
                         variant='outlined'
                         color='secondary'
+                        icon={<OndemandVideoIcon />}
                     />
                 </Typography>
                 <p
@@ -53,6 +56,9 @@ const ModuleCard = ({ module, style }) => {
                 >
                     {module.description}
                 </p>
+                <Button variant="outlined" color="white" full style={{margin: 'auto'}}>
+                    Visualizar aulas
+                </Button>
             </CardContent>
         </Card>
     )

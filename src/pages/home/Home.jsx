@@ -1,8 +1,10 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import ModuleCard from "../../components/ModuleCard/ModuleCard"
 import SearchField from "../../components/SearchField"
+import api from '../../api'
+import useAxios from "../../hooks/useAxios"
 
-const modules = [
+const _modules = [
     {
         id: 1,
         name: 'Python',
@@ -43,6 +45,20 @@ const modules = [
 ]
 
 const Home = (props) => {
+
+    const [modules, setModules] = useState([])
+    const axiosInstance = useAxios()
+
+    useEffect(() => {
+        const fetchModules = async () => {
+            const m = (await api.getModules(axiosInstance)).data
+            console.log(m)
+            setModules(m)
+        }
+
+        fetchModules()
+    }, [])
+    
     return (
         <React.Fragment>
             <div
