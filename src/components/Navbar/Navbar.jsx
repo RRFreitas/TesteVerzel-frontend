@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import Button from "@mui/material/Button"
 import PersonIcon from '@mui/icons-material/Person';
 import { Link } from "react-router-dom"
 import logo from "../../assets/logo_verzel.svg"
+import AuthContext from "../../context/AuthContext";
 
-const Navbar = () => (
-    <div 
+const Navbar = () => {
+    const { user, logoutUser } = useContext(AuthContext)
+
+    return(<div 
         style={{
             width: '100%',
             height: 130,
@@ -35,17 +38,41 @@ const Navbar = () => (
                 marginTop: 15
             }}
         >
-            <Link to='/login'>
-                <Button
-                    variant="outlined"
-                    startIcon={<PersonIcon />}
-                    color="purple"
-                >
-                    Login / Admin
-                </Button>
-            </Link>
+            { user ?
+                <div>
+                    <Link to="/admin" style={{marginRight: 20}}>
+                        <Button
+                            variant="outlined"
+                            startIcon={<PersonIcon />}
+                            color="purple"
+                        >
+                            Admin
+                        </Button>
+                    </Link>
+                    <Link to="/">
+                        <Button
+                            variant="outlined"
+                            startIcon={<PersonIcon />}
+                            color="purple"
+                            onClick={logoutUser}
+                        >
+                            Sair
+                        </Button>
+                    </Link>
+                </div>
+                :
+                <Link to='/login'>
+                    <Button
+                        variant="outlined"
+                        startIcon={<PersonIcon />}
+                        color="purple"
+                    >
+                        Entrar
+                    </Button>
+                </Link>
+            }
         </div>
-    </div>
-)
+    </div>)
+}
 
 export default Navbar

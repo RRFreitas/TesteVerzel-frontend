@@ -72,7 +72,7 @@ const ModuleCard = ({ module, style }) => {
                 >
                     {module.description}
                 </p>
-                <Button variant="outlined" color="white" full style={{margin: 'auto'}} onClick={handleOpen}>
+                <Button variant="outlined" color="white" style={{margin: 'auto'}} onClick={handleOpen}>
                     Visualizar aulas
                 </Button>
             </CardContent>
