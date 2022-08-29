@@ -1,14 +1,25 @@
-import React from "react"
+import React, { useState } from "react"
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import Chip from '@mui/material/Chip'
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo'
 import { Button } from "@mui/material"
+import ClassDialog from "./ClassDialog"
 
 const ModuleCard = ({ module, style }) => {
+
+    const [isOpen, setIsOpen] = useState(false)
     
     const numberOfClasses = module ? module.classes.length : 0
+
+    const handleOpen = () => {
+        setIsOpen(true)
+    }
+
+    const handleClose = () => {
+        setIsOpen(false)
+    }
 
     return (
         <Card
@@ -20,6 +31,11 @@ const ModuleCard = ({ module, style }) => {
                 ...style,
             }}
         >
+            <ClassDialog
+                module={module}
+                isOpen={isOpen}
+                close={handleClose}
+            />
             <CardContent
                 style={{
                     padding: 0,
@@ -56,7 +72,7 @@ const ModuleCard = ({ module, style }) => {
                 >
                     {module.description}
                 </p>
-                <Button variant="outlined" color="white" full style={{margin: 'auto'}}>
+                <Button variant="outlined" color="white" full style={{margin: 'auto'}} onClick={handleOpen}>
                     Visualizar aulas
                 </Button>
             </CardContent>
