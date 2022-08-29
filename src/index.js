@@ -14,6 +14,7 @@ import {Route} from "react-router-dom";
 
 import Home from "./pages/home";
 import Login from './pages/login'
+import Admin from './pages/admin/Admin'
 
 import Navbar from "./components/Navbar"
 
@@ -23,11 +24,11 @@ require('dotenv').config();
 
 
 const privateRoutes = [
-    /*{
-        path: "/assets/*",
+    {
+        path: "/admin",
         exact: true,
-        component: Asset
-    },*/
+        component: Admin
+    },
 ]
 
 const publicRoutes = [
@@ -41,16 +42,6 @@ const publicRoutes = [
         exact: true,
         component: Login,
     }
-    /*{
-        path: "/login",
-        exact: true,
-        component: Login,
-    },
-    {
-        path: "/signin",
-        exact: true,
-        component: Signin,
-    },*/
 ]
 
 ReactDOM.render(
