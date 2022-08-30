@@ -24,12 +24,14 @@ const CssTextField = styled(TextField)({
     },
   })
 
-const SearchField = ({ }) => {
+const SearchField = ({ searchPattern, setSearchPattern }) => {
     return (
         <CssTextField
             id="input-with-icon-textfield"
             placeholder="Filtrar módulos"
             fullWidth
+            value={searchPattern}
+            onChange={setSearchPattern}
             InputProps={{
                 startAdornment: (
                     <InputAdornment position="start">

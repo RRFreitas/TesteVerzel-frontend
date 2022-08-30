@@ -1,6 +1,5 @@
 import React from "react"
 import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -28,7 +27,7 @@ const ClassDialog = ({ module, isOpen, close }) => {
             <hr />
             <List>
                 {module.classes.map((c, i) => (
-                    <ListItem>
+                    <ListItem key={c.id}>
                         <ListItemText
                             primary={`${i+1} - ${c.name}`}
                             secondary={format(new Date(c.date), 'yyyy-MM-dd HH:mm:SS')}

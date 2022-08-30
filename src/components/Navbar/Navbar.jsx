@@ -27,6 +27,7 @@ const Navbar = () => {
             <Link to='/'>
                 <img
                     src={logo}
+                    alt="Verzel Logo"
                 />
             </Link>
         </div>

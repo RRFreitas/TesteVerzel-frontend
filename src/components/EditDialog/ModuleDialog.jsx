@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react"
 import { Button, TextField } from "@mui/material"
 import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import useAxios from "../../hooks/useAxios"
 import api from '../../api'
 
-const ModuleDialog = ({ isOpen, close, creating, editing, module }) => {
+const ModuleDialog = ({ isOpen, close, creating, editing, module, fetchModules }) => {
 
     const axiosInstance = useAxios()
 
@@ -35,11 +33,13 @@ const ModuleDialog = ({ isOpen, close, creating, editing, module }) => {
         } else {
             console.error("Component should be creating or editing")
         }
+        close()
     }
 
     const createModule = async () => {
         try {
             await api.createModule(axiosInstance, moduleDraft)
+            fetchModules()
         } catch(err) {
             alert(err)
         }
@@ -48,6 +48,7 @@ const ModuleDialog = ({ isOpen, close, creating, editing, module }) => {
     const editModule = async () => {
         try {
             await api.updateModule(axiosInstance, moduleDraft)
+            fetchModules()
         } catch(err) {
             alert(err)
         }
@@ -56,6 +57,8 @@ const ModuleDialog = ({ isOpen, close, creating, editing, module }) => {
     const handleDelete = async () => {
         try {
             await api.deleteModule(axiosInstance, moduleDraft.id)
+            fetchModules()
+            close()
         } catch(err) {
             alert(err)
         }
@@ -80,7 +83,7 @@ const ModuleDialog = ({ isOpen, close, creating, editing, module }) => {
         open={isOpen}
         onClose={close}
     >
-        <DialogTitle>{creating ? "Novo modulo" : "Editar modulo"}</DialogTitle>
+        <DialogTitle>{creating ? "Novo módulo" : "Editar módulo"}</DialogTitle>
         <DialogContent>
             <div
                 style={{
@@ -91,8 +94,8 @@ const ModuleDialog = ({ isOpen, close, creating, editing, module }) => {
                     justifyContent: 'space-between',
                 }}
             >
-                <TextField label="Name" variant="standard" value={moduleDraft.name} onChange={handleName}/>
-                <TextField label="Description" multiline variant="standard" value={moduleDraft.description} onChange={handleDescription}/>
+                <TextField label="Nome" variant="standard" value={moduleDraft.name} onChange={handleName}/>
+                <TextField label="Descrição" multiline variant="standard" value={moduleDraft.description} onChange={handleDescription}/>
                 <Button variant="contained" color="primary" onClick={handleSave}>
                     Salvar
                 </Button>

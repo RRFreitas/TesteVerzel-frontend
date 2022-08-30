@@ -64,7 +64,6 @@ const Login = () => {
                 <div
                     style={{
                         display:'flex',
-                        width: '100%',
                         height: '20vh',
                         flexDirection: 'column',
                         width: '50%',

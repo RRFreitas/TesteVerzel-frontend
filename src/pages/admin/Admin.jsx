@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Button, IconButton, Paper, List, ListItem, ListItemText } from "@mui/material"
+import { IconButton, Paper, CircularProgress } from "@mui/material"
 import { Add, Edit } from "@mui/icons-material"
 import api from '../../api'
 import useAxios from "../../hooks/useAxios"
@@ -18,12 +18,12 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import EditDialog from "../../components/EditDialog/EditDialog"
 import { format } from 'date-fns'
 
-const ClassRow = ({ row }) => {
+const ClassRow = ({ row, fetchModules }) => {
     const [openEdit, setOpenEdit] = useState(false)
 
     return (
     <TableRow>
-        <EditDialog _class={row} type="class" moduleId={row.module} editing isOpen={openEdit} close={() => setOpenEdit(false)} />
+        <EditDialog fetchModules={fetchModules} _class={row} type="class" moduleId={row.module} editing isOpen={openEdit} close={() => setOpenEdit(false)} />
         <TableCell component="th" scope="row">
             {row.name}
         </TableCell>
@@ -37,15 +37,15 @@ const ClassRow = ({ row }) => {
     )
 }
 
-const ModuleRow = ({ row }) => {
+const ModuleRow = ({ row, fetchModules }) => {
   const [open, setOpen] = useState(false)
   const [openEdit, setOpenEdit] = useState(false)
   const [openCreate, setOpenCreate] = useState(false)
 
   return (
     <React.Fragment>
-      <EditDialog module={row} type="module" editing isOpen={openEdit} close={() => setOpenEdit(false)}/>
-      <EditDialog type="class" moduleId={row.id} creating isOpen={openCreate} close={() => setOpenCreate(false)}/>
+      <EditDialog fetchModules={fetchModules} module={row} type="module" editing isOpen={openEdit} close={() => setOpenEdit(false)}/>
+      <EditDialog fetchModules={fetchModules} type="class" moduleId={row.id} creating isOpen={openCreate} close={() => setOpenCreate(false)}/>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
         <TableCell>
           <IconButton
@@ -83,7 +83,7 @@ const ModuleRow = ({ row }) => {
                 </TableHead>
                 <TableBody>
                   {row.classes.map((c) => (
-                    <ClassRow row={c} />
+                    <ClassRow key={c.id} fetchModules={fetchModules} row={c} />
                   ))}
                   <TableRow>
                     <TableCell colSpan={3} align="center">
@@ -106,16 +106,25 @@ const Admin = () => {
 
     const [modules, setModules] = useState([])
     const [openCreate, setOpenCreate] = useState(false)
+    const [fetching, setFetching] = useState(false)
     const axiosInstance = useAxios()
 
     const fetchModules = async () => {
+        setFetching(true)
         const m = (await api.getModules(axiosInstance)).data
         setModules(m)
+        setFetching(false)
     }
 
     useEffect(() => {
         fetchModules()
     }, [])
+
+    if(fetching) {
+        return (
+            <CircularProgress />
+        )
+    }
 
     return (
         <Paper
@@ -129,20 +138,20 @@ const Admin = () => {
                 paddingTop: 20,
             }}
         >
-            <EditDialog type="module" creating isOpen={openCreate} close={() => setOpenCreate(false)}/>
+            <EditDialog fetchModules={fetchModules} type="module" creating isOpen={openCreate} close={() => setOpenCreate(false)}/>
             <TableContainer component={Paper}>
                 <Table aria-label="collapsible table">
                     <TableHead>
                     <TableRow>
                         <TableCell />
-                        <TableCell>Modulo</TableCell>
-                        <TableCell>Descricao</TableCell>
+                        <TableCell>Módulo</TableCell>
+                        <TableCell>Descrição</TableCell>
                         <TableCell></TableCell>
                     </TableRow>
                     </TableHead>
                     <TableBody>
                     {modules.map((m) => (
-                        <ModuleRow key={m.id} row={m} />
+                        <ModuleRow key={m.id} row={m} fetchModules={fetchModules} />
                     ))}
                         <TableRow>
                             <TableCell colSpan={4} align="center">

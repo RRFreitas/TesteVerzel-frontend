@@ -4,55 +4,15 @@ import SearchField from "../../components/SearchField"
 import api from '../../api'
 import useAxios from "../../hooks/useAxios"
 
-const _modules = [
-    {
-        id: 1,
-        name: 'Python',
-        description: 'Description python',
-        classes: [
-            'Python - aula 1',
-            'Python - aula 2',
-            'Python - aula 3',
-        ]
-    },
-    {
-        id: 2,
-        name: 'C++',
-        description: 'Description C++',
-        classes: [
-            'C++ - aula 1',
-            'C++ - aula 2',
-            'C++ - aula 3',
-        ]
-    },
-    {
-        id: 3,
-        name: 'Java',
-        description: 'Description java',
-        classes: [
-            'Java - aula 1',
-            'Java - aula 2',
-        ]
-    },
-    {
-        id: 4,
-        name: 'C#',
-        description: 'Description C#',
-        classes: [
-            'C# - aula 1',
-        ]
-    }
-]
-
-const Home = (props) => {
+const Home = () => {
 
     const [modules, setModules] = useState([])
+    const [searchPattern, setSearchPattern] = useState('')
     const axiosInstance = useAxios()
 
     useEffect(() => {
         const fetchModules = async () => {
             const m = (await api.getModules(axiosInstance)).data
-            console.log(m)
             setModules(m)
         }
 
@@ -76,7 +36,7 @@ const Home = (props) => {
                         width: '60%'
                     }}
                 >
-                    <SearchField />
+                    <SearchField searchPattern={searchPattern} setSearchPattern={setSearchPattern} />
                 </div>
 
                 <div

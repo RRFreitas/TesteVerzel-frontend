@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Button, TextField } from "@mui/material"
 import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import useAxios from "../../hooks/useAxios"
 import api from '../../api'
@@ -27,7 +25,7 @@ const BasicDateTimePicker= ({selectedDate, handleDateChange}) =>{
   );
 }
 
-const ClassDialog = ({ isOpen, close, creating, editing, _class, moduleId}) => {
+const ClassDialog = ({ isOpen, close, creating, editing, _class, moduleId, fetchModules }) => {
 
     const axiosInstance = useAxios()
 
@@ -58,11 +56,13 @@ const ClassDialog = ({ isOpen, close, creating, editing, _class, moduleId}) => {
         } else {
             console.error("Component should be creating or editing")
         }
+        close()
     }
 
     const createClass = async () => {
         try {
             await api.createClass(axiosInstance, classDraft)
+            fetchModules()
         } catch(err) {
             alert(err)
         }
@@ -71,6 +71,8 @@ const ClassDialog = ({ isOpen, close, creating, editing, _class, moduleId}) => {
     const handleDelete = async () => {
         try {
             await api.deleteClass(axiosInstance, classDraft.id)
+            fetchModules()
+            close()
         } catch(err) {
             alert(err)
         }
@@ -79,6 +81,7 @@ const ClassDialog = ({ isOpen, close, creating, editing, _class, moduleId}) => {
     const editClass = async () => {
         try {
             await api.updateClass(axiosInstance, classDraft)
+            fetchModules()
         } catch(err) {
             alert(err)
         }
@@ -92,7 +95,6 @@ const ClassDialog = ({ isOpen, close, creating, editing, _class, moduleId}) => {
     }
     
     const handleDate = (newDate) => {
-        console.log(newDate.$d)
         setClassDraft({
             ...classDraft,
             date: format(newDate.$d, 'yyyy-MM-dd HH:mm')
@@ -115,7 +117,7 @@ const ClassDialog = ({ isOpen, close, creating, editing, _class, moduleId}) => {
                     justifyContent: 'space-between',
                 }}
             >
-                <TextField label="Name" variant="standard" value={classDraft.name} onChange={handleName}/>
+                <TextField label="Nome" variant="standard" value={classDraft.name} onChange={handleName}/>
                 <BasicDateTimePicker
                     selectedDate={classDraft.date}
                     handleDateChange={handleDate}
