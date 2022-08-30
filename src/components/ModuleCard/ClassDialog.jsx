@@ -26,7 +26,7 @@ const ClassDialog = ({ module, isOpen, close }) => {
           </DialogContentText>
             <hr />
             <List>
-                {module.classes.map((c, i) => (
+                {module.classes.sort((a, b) => a.name.localeCompare(b.name)).map((c, i) => (
                     <ListItem key={c.id}>
                         <ListItemText
                             primary={`${i+1} - ${c.name}`}
