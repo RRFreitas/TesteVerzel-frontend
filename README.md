@@ -22,6 +22,7 @@
 
 ### Passo a passo de uso
 - Abrir [http://localhost:3000/](http://localhost:3000/)
+- Se aparecer algum alerta de erro, provavelmente o backend não está rodando ou não foram rodadas as migrations
 - Clicar em Login ou ir para [http://localhost:3000/login](http://localhost:3000/login)
 - Utilize o login e senha do admin criado no backend conforme o [readme](https://github.com/RRFreitas/TesteVerzel-backend)
 - Clicar em Admin ou ir para [http://localhost:3000/admin](http://localhost:3000/admin)
