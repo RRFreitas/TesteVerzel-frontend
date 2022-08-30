@@ -110,10 +110,14 @@ const Admin = () => {
     const axiosInstance = useAxios()
 
     const fetchModules = async () => {
+      try {
         setFetching(true)
         const m = (await api.getModules(axiosInstance)).data
         setModules(m)
         setFetching(false)
+      } catch(err) {
+        alert(err)
+      }
     }
 
     useEffect(() => {

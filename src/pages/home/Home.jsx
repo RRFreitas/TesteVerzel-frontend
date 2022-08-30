@@ -12,8 +12,12 @@ const Home = () => {
 
     useEffect(() => {
         const fetchModules = async () => {
-            const m = (await api.getModules(axiosInstance)).data
-            setModules(m)
+            try {
+                const m = (await api.getModules(axiosInstance)).data
+                setModules(m)
+            } catch(err) {
+                alert(err)
+            }
         }
 
         fetchModules()
