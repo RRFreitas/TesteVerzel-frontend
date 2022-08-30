@@ -8,6 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import { format } from 'date-fns'
 
 const ClassDialog = ({ module, isOpen, close }) => {
     return (
@@ -16,21 +17,26 @@ const ClassDialog = ({ module, isOpen, close }) => {
             onClose={close}
         >
         <DialogTitle>{module.name}</DialogTitle>
-        <DialogContent>
+        <DialogContent
+            style={{
+                minWidth: 300,
+            }}
+        >
           <DialogContentText>
             {module.description}
+          </DialogContentText>
             <hr />
             <List>
                 {module.classes.map((c, i) => (
                     <ListItem>
                         <ListItemText
-                            primary={`${i+1} - ${c.name} ${c.date}`}
+                            primary={`${i+1} - ${c.name}`}
+                            secondary={format(new Date(c.date), 'yyyy-MM-dd HH:mm:SS')}
                         />
                     </ListItem>
                 ))
                 }
             </List>
-          </DialogContentText>
         </DialogContent>
       </Dialog>
     ) 

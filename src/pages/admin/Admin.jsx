@@ -4,23 +4,48 @@ import { Add, Edit } from "@mui/icons-material"
 import api from '../../api'
 import useAxios from "../../hooks/useAxios"
 
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import Box from '@mui/material/Box'
+import Collapse from '@mui/material/Collapse'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import Typography from '@mui/material/Typography'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
+import EditDialog from "../../components/EditDialog/EditDialog"
+import { format } from 'date-fns'
 
-const Row = ({ row }) => {
-  const [open, setOpen] = React.useState(false);
+const ClassRow = ({ row }) => {
+    const [openEdit, setOpenEdit] = useState(false)
+
+    return (
+    <TableRow>
+        <EditDialog _class={row} type="class" moduleId={row.module} editing isOpen={openEdit} close={() => setOpenEdit(false)} />
+        <TableCell component="th" scope="row">
+            {row.name}
+        </TableCell>
+        <TableCell>{format(new Date(row.date), 'yyyy-MM-dd HH:mm:SS')}</TableCell>
+        <TableCell align="center">
+            <IconButton onClick={() => setOpenEdit(true)}>
+                <Edit />
+            </IconButton>
+        </TableCell>
+    </TableRow>
+    )
+}
+
+const ModuleRow = ({ row }) => {
+  const [open, setOpen] = useState(false)
+  const [openEdit, setOpenEdit] = useState(false)
+  const [openCreate, setOpenCreate] = useState(false)
 
   return (
     <React.Fragment>
+      <EditDialog module={row} type="module" editing isOpen={openEdit} close={() => setOpenEdit(false)}/>
+      <EditDialog type="class" moduleId={row.id} creating isOpen={openCreate} close={() => setOpenCreate(false)}/>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
         <TableCell>
           <IconButton
@@ -36,7 +61,7 @@ const Row = ({ row }) => {
         </TableCell>
         <TableCell align="left">{row.description}</TableCell>
         <TableCell align="right">
-            <IconButton>
+            <IconButton onClick={() => setOpenEdit(true)}>
                 <Edit />
             </IconButton>
         </TableCell>
@@ -58,21 +83,11 @@ const Row = ({ row }) => {
                 </TableHead>
                 <TableBody>
                   {row.classes.map((c) => (
-                    <TableRow key={c.id}>
-                      <TableCell component="th" scope="row">
-                        {c.name}
-                      </TableCell>
-                      <TableCell>{c.date}</TableCell>
-                      <TableCell align="center">
-                        <IconButton>
-                            <Edit />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
+                    <ClassRow row={c} />
                   ))}
                   <TableRow>
                     <TableCell colSpan={3} align="center">
-                        <IconButton>
+                        <IconButton onClick={() => setOpenCreate(true)}>
                             <Add color="#0f0" />
                         </IconButton>
                     </TableCell>
@@ -90,14 +105,15 @@ const Row = ({ row }) => {
 const Admin = () => {
 
     const [modules, setModules] = useState([])
+    const [openCreate, setOpenCreate] = useState(false)
     const axiosInstance = useAxios()
 
-    useEffect(() => {
-        const fetchModules = async () => {
-            const m = (await api.getModules(axiosInstance)).data
-            setModules(m)
-        }
+    const fetchModules = async () => {
+        const m = (await api.getModules(axiosInstance)).data
+        setModules(m)
+    }
 
+    useEffect(() => {
         fetchModules()
     }, [])
 
@@ -113,6 +129,7 @@ const Admin = () => {
                 paddingTop: 20,
             }}
         >
+            <EditDialog type="module" creating isOpen={openCreate} close={() => setOpenCreate(false)}/>
             <TableContainer component={Paper}>
                 <Table aria-label="collapsible table">
                     <TableHead>
@@ -125,11 +142,11 @@ const Admin = () => {
                     </TableHead>
                     <TableBody>
                     {modules.map((m) => (
-                        <Row key={m.id} row={m} />
+                        <ModuleRow key={m.id} row={m} />
                     ))}
                         <TableRow>
                             <TableCell colSpan={4} align="center">
-                                <IconButton>
+                                <IconButton onClick={() => setOpenCreate(true)}>
                                     <Add color="#0f0" />
                                 </IconButton>
                             </TableCell>
