@@ -44,7 +44,7 @@ const Home = () => {
                         marginTop: 20,
                         width: '75%',
                         display: 'flex',
-                        justifyContent: 'space-between',
+                        justifyContent: 'space-evenly',
                         flexWrap: 'wrap'
                     }}     
                 >
