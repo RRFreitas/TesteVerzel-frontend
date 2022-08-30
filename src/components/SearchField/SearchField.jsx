@@ -31,7 +31,7 @@ const SearchField = ({ searchPattern, setSearchPattern }) => {
             placeholder="Filtrar módulos"
             fullWidth
             value={searchPattern}
-            onChange={setSearchPattern}
+            onChange={(e) => setSearchPattern(e.target.value)}
             InputProps={{
                 startAdornment: (
                     <InputAdornment position="start">

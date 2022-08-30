@@ -48,7 +48,7 @@ const Home = () => {
                         flexWrap: 'wrap'
                     }}     
                 >
-                    {modules.map(m => (
+                    {modules.filter(m => m.name.toLowerCase().startsWith(searchPattern.toLowerCase())).map(m => (
                         <ModuleCard
                             key={m.id}
                             module={m}

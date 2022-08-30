@@ -43,7 +43,6 @@ const ClassDialog = ({ isOpen, close, creating, editing, _class, moduleId, fetch
                 date: _class.date,
                 module: _class.module
             })
-            console.log(_class)
         }
     }, [editing])
 
