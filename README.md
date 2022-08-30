@@ -30,3 +30,5 @@
 - Na linha do módulo criado, clicar na seta do lado esquerdo, abrirá uma tabela de aulas, clicar no `+`, preencher os dados e salvar.
 - O novo módulo estará na página inicial (clique na logo do canto superior esquerdo ou vá para [http://localhost:3000/](http://localhost:3000/))
 - Na página de admin também é possível clica nos ícones de editar para editar as informações do módulo ou aula e excluir.
+
+### Screencast: [https://drive.google.com/file/d/1wUKDqTRoIb_GN9CULWu0t9Qo6NM2NEGW/view?usp=sharing](https://drive.google.com/file/d/1wUKDqTRoIb_GN9CULWu0t9Qo6NM2NEGW/view?usp=sharing)
